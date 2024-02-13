@@ -1,5 +1,6 @@
 package com.aws.listener.repo;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -52,7 +53,7 @@ public class SqsRepoImpl implements SqsRepo {
 					+ urlInput + " --num_top_predictions 1 | tail -n 1 | cut -d '(' -f1").start();
 			p.waitFor();
 			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			termOutput = br.readLine();
+			termOutput = BoundedLineReader.readLine(br, 5_000_000);
 			p.destroy();
 		} catch (Exception e) {
 		}
