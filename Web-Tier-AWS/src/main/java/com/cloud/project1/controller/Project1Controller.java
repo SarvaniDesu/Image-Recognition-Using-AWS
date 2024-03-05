@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,18 +26,18 @@ public class Project1Controller {
 	@Autowired
 	private ImageURLService imageURLService;
 
-	@RequestMapping(value = "info", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "info", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getInfo() {
 		return new ResponseEntity<String>("Project 1 is running!", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "defaultURL", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "defaultURL", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ImageURL> getImageURL() {
 		ImageURL imageURL = imageURLService.getImageURL();
 		return new ResponseEntity<ImageURL>(imageURL, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "cloudimagerecognition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "cloudimagerecognition", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> inputURL(@RequestParam("input") String url) {
 		LOGGER.debug("Received the HTTP request from the user.");
 		String outputMessage = imageURLService.inputURL(url);
